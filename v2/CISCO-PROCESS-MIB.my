@@ -159,8 +159,8 @@ ciscoProcessMIB MODULE-IDENTITY
         cpmProcExtMemFreedRev, cpmProcExtInvokedRev, 
         cpmProcExtRuntimeRev, cpmProcExtUtil5SecRev,
         cpmProcExtUtil1MinRev, cpmCPUTotal5MinRev, 
-        cpmCPUTotal5secRev, cpmCPUTotal1minRev and 
-        cpmCPUTotal5minRev."
+        cpmCPUTotal5secRev, cpmCPUTotal1minRev, 
+        cpmCPUTotal5minRev and cpmCPUTotal15minRev"
     REVISION        "9804150000Z"
     DESCRIPTION
         "Initial version of this MIB."
@@ -236,6 +236,7 @@ CpmCPUTotalEntry ::= SEQUENCE {
         cpmCPUTotal5secRev               Gauge32,
         cpmCPUTotal1minRev               Gauge32,
         cpmCPUTotal5minRev               Gauge32,
+        cpmCPUTotal15minRev              Gauge32,
         cpmCPUMonInterval                Unsigned32,
         cpmCPUTotalMonIntervalValue      Gauge32,
         cpmCPUInterruptMonIntervalValue  Gauge32,
@@ -355,6 +356,17 @@ cpmCPUTotal5minRev OBJECT-TYPE
         period. This object deprecates the object cpmCPUTotal5min 
         and increases the value range to (0..100)." 
     ::= { cpmCPUTotalEntry 8 }
+
+cpmCPUTotal15minRev OBJECT-TYPE
+    SYNTAX          Gauge32 (0..100)
+    UNITS           "percent"
+    MAX-ACCESS      read-only
+    STATUS          current
+    DESCRIPTION
+        "The overall CPU busy percentage in the last 15 minute
+        period. This object deprecates the object cpmCPUTotal15min 
+        and increases the value range to (0..100)." 
+    ::= { cpmCPUTotalEntry 31 }
 
 cpmCPUMonInterval OBJECT-TYPE
     SYNTAX          Unsigned32
@@ -2661,7 +2673,8 @@ cpmCPUTotalGroupRev OBJECT-GROUP
                         cpmCPUTotalPhysicalIndex,
                         cpmCPUTotal5secRev,
                         cpmCPUTotal1minRev,
-                        cpmCPUTotal5minRev
+                        cpmCPUTotal5minRev,
+                        cpmCPUTotal15minRev
                     }
     STATUS          deprecated
     DESCRIPTION
@@ -2718,6 +2731,7 @@ cpmCPUTotalGroupRev1 OBJECT-GROUP
                         cpmCPUTotalPhysicalIndex,
                         cpmCPUTotal1minRev,
                         cpmCPUTotal5minRev,
+                        cpmCPUTotal15minRev,
                         cpmCPUMonInterval,
                         cpmCPUTotalMonIntervalValue,
                         cpmCPUInterruptMonIntervalValue
